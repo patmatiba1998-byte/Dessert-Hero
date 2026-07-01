@@ -1,0 +1,41 @@
+{% load static %}
+<!-- frontend/verify_code.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Code</title>
+  <link rel="stylesheet" href="{% static 'verifycode.css' %}">
+</head>
+<body>
+  <div class="verify-code-container">
+    <div class="verify-code-form">
+      <h2>Enter Verification Code</h2>
+      <form method="POST" action="{% url 'users:verify_code' %}">
+        {% csrf_token %}
+        <div class="input-container">
+          <input type="text" name="verification_code" placeholder="Enter Code" required>
+        </div>
+        <button type="submit">Verify</button>
+      </form>
+    </div>
+  </div>
+
+  {% if show_modal %}
+  <!-- Modal for choosing dashboard -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Select Dashboard</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <button type="submit" formaction="{% url 'users:dashboard1' %}">Go to Dashboard 1</button>
+        <button type="submit" formaction="{% url 'users:dashboard2' %}">Go to Dashboard 2</button>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+</body>
+</html>

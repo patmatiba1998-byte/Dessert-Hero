@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+</head>
+<body>
+    <h1>Hello Our Trusted Customer</h1>
+    <p>Welcome to Desert Hero Shoe Place</p>
+
+    <h3>Sale Details</h3>
+    <ul>
+        <li><strong>Shoe Type:</strong> {{ sale.shoe_type }}</li>
+        <li><strong>Size:</strong> {{ sale.size }}</li>
+        <li><strong>Color:</strong> {{ sale.color }}</li>
+        <li><strong>Pieces Sold:</strong> {{ sale.pieces }}</li>
+        <li><strong>Price per Piece:</strong> Ksh. {{ sale.price_per_piece }}</li>
+        <li><strong>Total Price:</strong> Ksh. {{ total_price }}</li>
+    </ul>
+
+    <p>Served by: {{ user.username }}</p>
+    <p>Make a purchase all the time!</p>
+</body>
+</html>

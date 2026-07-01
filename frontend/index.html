@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+  Girly by FreeHTML5.co
+  Twitter: https://twitter.com/fh5co
+  Facebook: https://fb.com/fh5co
+  URL: https://freehtml5.co
+-->
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <title>MatibaShoe</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md  fixed-top maine-menu">
+    <div class="container">
+      <button class="navbar-toggler ml-auto" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"> <span class="bar1"></span> <span class="bar2"></span> <span class="bar3"></span> </button>
+      <div id="my-nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item active"> <a class="nav-link" href="#">Home</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="#about" tabindex="-1" aria-disabled="true">About</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'users:login' %}" tabindex="-1" aria-disabled="true">Login</a></li>
+
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid fh5co-home-banner">
+    <div class="card"> <img class="card-img" src="{% static 'assets/img/banner.jpg' %}" alt="">
+      <div class="card-img-overlay">
+        <div class="center-text">
+          <h2 class="card-title">A great pair of shoes is the save button for the soul’s journey</h2>
+          <a href="{% url 'users:login' %}" class="btn">
+            <svg width="201" height="51" viewBox="0 0 201 51">
+              <defs>
+                <style>
+                .cls-1 {
+                  fill: none;
+                  stroke-width: 1px;
+                  stroke: url(#linear-gradient);
+                }
+              </style>
+              <linearGradient id="linear-gradient" x1="140.508" y1="50.5" x2="60.492" y2="0.5" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#e90e65"/>
+                <stop offset="1" stop-color="#fff"/>
+              </linearGradient>
+            </defs>
+            <rect id="Rounded_Rectangle_1" data-name="Rounded Rectangle 1" class="cls-1" x="0.5" y="0.5" width="200" height="50" rx="25" ry="25"/>
+          </svg>
+        Get Started</a> </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="container-fluid fh5co-recent-work">
+    <div class="container contact-pop">
+      <div class="row">
+        <div class="col-md-6  pr-0">
+          <div class="card"> <img class="card-img w-100" src="{% static 'assets/img/shoe3.jpg' %}" alt="">
+            <div class="card-img-overlay"> </div>
+          </div>
+        </div>
+        <div class="col-md-6 pl-0" id="about">
+          <div class="content">
+            <h3>Desert Hero Sole</h3>
+            
+            <hr />
+            <p>Step into style with confidence at ShoeTIBA, your ultimate destination for brand new, 
+              high quality shoes that blend comfort, class, and durability. From sleek sneakers to 
+              elegant formal wear, our collections are crafted to match your lifestyle and help you 
+              make a lasting impression. Each pair is thoughtfully selected for superior materials, 
+              perfect fit, and modern design, ensuring you walk with pride and personality. At ShoeTIBA, 
+              we don’t just sell shoes, we celebrate individuality, offering affordable prices, fast delivery, 
+              and styles for men, women, and kids. Wherever you're headed, ShoeTIBA has the perfect pair to get 
+              you there in style.</p>
+            <a href="{% url 'users:login' %}" class="btn">LOGIN</a> </div>
+          </div>
+        </div>
+      </div>
+      <div class="container recent" id="activity">
+        <div class="row">
+          <h2>Recent shoes</h2>
+          <div class="owl-carousel owl-carousel2 owl-theme">
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe4.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">PUMA Smash Sneakers</h5>
+                    <p class="card-text">Brand New, Black & White Design</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe5.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">PUMA FENTY Creeper Sneakers</h5>
+                    <p class="card-text">Soft Green Suede with Gum Sole </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe6.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Nike Shox TL</h5>
+                    <p class="card-text">Bold. Futuristic. Built for comfort and style.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe7.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Air Jordan 4 Grey Sneakers</h5>
+                    <p class="card-text">Cool Grey with Black Accents and Iconic Jordan Logo</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe8.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Air Jordan 4 Grey Sneakers</h5>
+                    <p class="card-text">Cool Grey with Black Accents and Iconic Jordan Logo</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe9.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Nike Air Max Plus White & Yellow Sneakers</h5>
+                    <p class="card-text">White, Yellow, and Black with Air Max Cushioning</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe10.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Nike Vapor Edge Football Cleats</h5>
+                    <p class="card-text">Neon Yellow with Black Swoosh and Lightweight Design</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe11.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Adidas Grey Sneakers</h5>
+                    <p class="card-text">Sleek Grey Upper with White Accents and Signature Adidas Branding</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe12.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Air Jordan 11 Black Patent Sneakers</h5>
+                    <p class="card-text">Classic Black Patent Leather with Mesh Upper and Sleek Design</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe13.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Nike Air Force 1 White & Brown Sneakers</h5>
+                    <p class="card-text">Classic White Leather with Brown and Red Swoosh Detailing</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe14.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Louis Vuitton Black Sneakers</h5>
+                    <p class="card-text">Black Leather with White Accents and Signature LV Branding</p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card"> <img class="card-img" src="{% static 'assets/img/shoe15.jpg' %}" alt="">
+                <div class="card-img-overlay"> <a href="#"><img src="{% static 'assets/img/heart.png' %}" class="heart" alt="heart icon"></a>
+                  <div class="bottom-text">
+                    <h5 class="card-title">Air Jordan 1 Black Patent Sneakers</h5>
+                    <p class="card-text">Black Patent Leather with Signature Jumpman Logo and Classic Design</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              
+            </div>      
+                     
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="container-fluid p-0 pr-0">
+    
+    <div class="copy pt-4 pb-4">
+      <p><a href="https://freehtml5.co/" target="_blank"> &copy; Matiba ShoeSole</a>  &nbsp;  |  &nbsp; Design by Brael Blessing &nbsp; | &nbsp;  All rights reserved</p>
+    </div>
+  </footer>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS --> 
+  <script src="{% static 'assets/js/jquery-3.3.1.slim.min.js' %}"></script> 
+  <script src="{% static 'assets/js/popper.min.js' %}" ></script> 
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script> 
+  <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script> 
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

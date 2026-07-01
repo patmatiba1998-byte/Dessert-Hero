@@ -1,0 +1,350 @@
+/* ==================== Global Styles ==================== */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #4e73df, #1cc88a); /* Vibrant gradient background */
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0212ee;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Table Styling */
+.table th, .table td {
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px;
+}
+
+.table th {
+    background: linear-gradient(135deg, #5764b3, #123ca5); 
+    color: white;
+    border-bottom: 2px solid #2d2d2d;
+}
+
+.table td {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+}
+
+.table tbody tr:hover {
+    background-color: #d3e1f1;
+    cursor: pointer;
+}
+
+/* ===================== Buttons ===================== */
+
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    margin: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #0d6efd, #2575fc);
+    color: white;
+    border: none;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #0b5ce6, #3b82f6);
+    transform: translateY(-3px);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545, #ff4d75);
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #e02b4f, #ff3366);
+    transform: translateY(-3px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0d6efd, #1d9ab7);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0b5ce6, #38bdf8);
+    transform: translateY(-3px);
+}
+
+/* ===================== Sidebar Styles ===================== */
+#sidebar {
+    background-color: #2d2d2d;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    width: 200px; /* Sidebar width */
+    z-index: 2;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+#sidebar .nav-item {
+    margin-bottom: 20px;
+}
+
+#sidebar .nav-link {
+    color: #b0bec5;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+#sidebar .nav-link:hover {
+    color: #fff;
+    background-color: #0d6efd;
+    padding-left: 20px;
+}
+
+#sidebarToggle {
+    display: none;
+}
+
+/* Sidebar Open/Close Button */
+#sidebarCloseButton, #sidebarOpenButton {
+    position: absolute;
+    top: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+#sidebarCloseButton {
+    right: 10px;
+}
+
+#sidebarOpenButton {
+    left: 10px;
+}
+
+/* Sidebar Close */
+#sidebarToggle:checked ~ #sidebar {
+    transform: translateX(-250px);
+}
+
+/* Main Content */
+#dashboardContent {
+    margin-left: 200px;
+    padding: 30px;
+    z-index: 1;
+    background-color: #f0f4f8;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ===================== Modal Styles ===================== */
+.modal-content {
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(43, 44, 56, 0.301), rgba(124, 58, 237, .12));
+    color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #0d6efd, #3b82f6);
+    color: white;
+    padding: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    background-color: #2f2f2f;
+    padding: 10px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.modal-footer button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.modal-footer .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.modal-footer .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.modal-footer .btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #0255e1;
+    border-color: #0255e1;
+}
+
+
+/* Select dropdown styling */
+.form-select {
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.form-select:hover, .form-select:focus {
+    background: #ffffff;
+    border-color: rgba(0, 123, 255, .45);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
+
+.form-select option {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+/* ===================== Search Bar Styling ===================== */
+form.d-flex {
+    display: flex;
+    align-items: center;  /* Aligns the input, button, and labels in the same row */
+    justify-content: flex-start; /* Ensures items are left-aligned */
+    margin-bottom: 20px;
+}
+
+form .search-input {
+    width: 600px;  /* Reduce the width of the search input field */
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    background-color: #f1f1f1; /* Light background for the search bar */
+    color: #333; /* Dark text color for better visibility */
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+form .search-input:focus {
+    background-color: #ffffff; /* Focused input has a white background */
+    border-color: #0d6efd;  /* Blue border when focused */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);  /* Focus shadow effect */
+}
+
+form .search-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #5764b3, #123ca5);
+    color: white;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+form .search-btn:hover {
+    background: linear-gradient(135deg, #0b5ce6, #3b82f6);
+    transform: translateY(-3px);
+}
+
+/* Total Price Styling */
+.total-price-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, #5764b3, #123ca5);
+    padding: 8px 15px;
+    border-radius: 15px;
+    margin-left: 100px;
+    transition: all 0.3s ease;
+}
+
+.total-price-label:hover {
+    background: linear-gradient(135deg, #3b82f6, #0d6efd); /* Hover effect with reversed gradient */
+}
+
+.total-price-value {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff; /* Bright yellow for emphasis */
+    padding: 8px 15px;
+    background: linear-gradient(135deg, #5764b3, #123ca5); /* Yellow to orange gradient */
+    border-radius: 15px;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.total-price-value:hover {
+    background: linear-gradient(135deg, #ff8c00, #f39c12); /* Hover effect with reversed gradient */
+}
+
+
+
+/* ===================== Responsive Styling ===================== */
+@media (max-width: 992px) {
+    .table th, .table td {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .modal-dialog {
+        width: 80%;
+    }
+
+    #dashboardContent {
+        margin-left: 0;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .table th, .table td {
+        font-size: 0.8rem;
+    }
+
+    .modal-dialog {
+        width: 95%;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}

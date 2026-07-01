@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{% static 'analytics.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+      <div class="row">
+          <!-- Sidebar (same as in dashboard) -->
+          <div id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark text-light">
+              <div class="d-flex flex-column align-items-center p-3">
+                  <h3 class="text-center mb-4">Welcome</h3>
+                  <ul class="nav flex-column">
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'users:dashboard2' %}" id="shoeStockLink">Dashboard</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'shoe_stock:all_stock' %}" id="shoeStockLink">Shoe Stock</a>
+                      </li>
+                      
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'allshoesells:all_sells' %}">Shoe Sold</a>
+                      </li>
+                      
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'analytics:analytics_page' %}">Analytics</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'index' %}">Logout</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+<div class="container">
+    <h2 class="text-center my-5">Analytics Dashboard</h2>
+
+    <!-- Profit Margin Graph (Weekly) -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <canvas id="profitMarginChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Total Selling Price Over Time Graph (Daily) -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <canvas id="totalSellingPriceChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Total Pieces Sold Over Time Graph (Daily) -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <canvas id="totalPiecesSoldChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Shoe Popularity Graph -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <canvas id="shoePopularityChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Revenue vs Cost Comparison Graph (Daily) -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <canvas id="revenueVsCostChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+// Profit Margin Chart (Weekly)
+const profitMarginData = JSON.parse('{{ profit_margin_data | escapejs }}');
+const profitMarginChart = new Chart(document.getElementById('profitMarginChart'), {
+    type: 'line',
+    data: {
+        labels: profitMarginData.map(data => `Week ${data.week}`), // X-axis labels (weekly)
+        datasets: [{
+            label: 'Profit Margin (%)',
+            data: profitMarginData.map(data => data.profit_margin),
+            borderColor: 'rgba(0, 123, 255, 1)',
+            borderWidth: 2,
+            fill: false
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 10
+                }
+            }
+        }
+    }
+});
+
+// Total Selling Price Chart (Daily)
+const dailySales = JSON.parse('{{ daily_sales | safe }}');
+const totalSellingPriceChart = new Chart(document.getElementById('totalSellingPriceChart'), {
+    type: 'bar',
+    data: {
+        labels: dailySales.map(sale => sale.day),
+        datasets: [{
+            label: 'Total Selling Price',
+            data: dailySales.map(sale => sale.total_sales),
+            backgroundColor: 'rgba(0, 123, 255, 0.5)',
+            borderColor: 'rgba(0, 123, 255, 1)',
+            borderWidth: 1
+        }]
+    }
+});
+
+// Total Pieces Sold Chart (Daily)
+const dailyPieces = JSON.parse('{{ daily_pieces | safe }}');
+const totalPiecesSoldChart = new Chart(document.getElementById('totalPiecesSoldChart'), {
+    type: 'line',
+    data: {
+        labels: dailyPieces.map(pieces => pieces.day),
+        datasets: [{
+            label: 'Total Pieces Sold',
+            data: dailyPieces.map(pieces => pieces.total_pieces),
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 2,
+            fill: false
+        }]
+    }
+});
+
+// Shoe Popularity Chart
+const shoePopularity = JSON.parse('{{ shoe_popularity | safe }}');
+const shoePopularityChart = new Chart(document.getElementById('shoePopularityChart'), {
+    type: 'bar',
+    data: {
+        labels: shoePopularity.map(shoe => shoe.shoe_type),
+        datasets: [{
+            label: 'Pieces Sold',
+            data: shoePopularity.map(shoe => shoe.total_sales),
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    }
+});
+
+// Revenue vs Cost Chart (Daily)
+const revenueVsCost = JSON.parse('{{ revenue_vs_cost | safe }}');
+const revenueVsCostChart = new Chart(document.getElementById('revenueVsCostChart'), {
+    type: 'line',
+    data: {
+        labels: revenueVsCost.map(rc => rc.day),
+        datasets: [{
+            label: 'Revenue',
+            data: revenueVsCost.map(rc => rc.total_sales),
+            borderColor: 'rgba(0, 255, 0, 0.7)', // Green for revenue
+            borderWidth: 2,
+            fill: false
+        }, {
+            label: 'Cost',
+            data: revenueVsCost.map(rc => rc.total_cost),
+            borderColor: 'rgba(255, 0, 0, 0.7)', // Red for cost
+            borderWidth: 2,
+            fill: false
+        }]
+    }
+});
+</script>
+
+</body>
+</html>

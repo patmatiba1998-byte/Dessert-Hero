@@ -1,0 +1,344 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sell Shoe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'sell.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container py-4">
+  <h3 class="mb-3">Shoe Types & Selling Price</h3>
+
+  <div id="flashArea"></div>
+
+  <div class="row g-3 mb-4" id="cardsRow">
+    {% for label, count in shoe_types.items %}
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="card type-card h-100 text-center" data-type="{{ label }}">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <a class="type-name">{{ label }}</a>
+            <div class="type-count" id="count-{{ label|slugify }}">{{ count }}</div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+      <div class="card type-card h-100 text-center">
+        <div class="card-body d-flex flex-column justify-content-center">
+          <a class="type-name">Selling price</a>
+          <div class="type-count" id="selling-total">{{ selling_total|floatformat:2 }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="section-title">Sell Shoe Action</h4>
+
+  <div class="card sell-card mt-3">
+    <div class="card-body">
+      <h5 class="mb-3">Sell a Shoe</h5>
+
+      {% if form.errors %}
+        <div class="alert alert-danger mb-3">Please correct the errors below.</div>
+      {% endif %}
+
+      <form id="sellForm" class="row g-3" novalidate>
+        {% csrf_token %}
+        <div class="col-md-4">
+          <label class="form-label">Shoe type</label>
+          {{ form.shoe_type }}
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Size</label>
+          {{ form.size }}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Color</label>
+          {{ form.color }}
+        </div>
+        <!-- Added this div below the color field to display the image -->
+        <div class="mb-3">
+          <label class="form-label">Shoe Picture</label>
+          <div id="shoe-image-container" class="text-center">
+            <img id="shoeImagePreviewModal" src="{{ shoe_image_url }}" alt="Shoe Image" class="img-fluid" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; background-color: #fff; padding: 10px; display: none;" />
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Pieces</label>
+          {{ form.pieces }}
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Price (Ksh. per piece)</label>
+          {{ form.price_per_piece }}
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+          <button type="submit" id="sellBtn" class="btn btn-primary">SELL</button>
+          <a href="{% url 'shoe_input:dashboard1' %}" class="btn btn-outline-secondary">Back to dashboard</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Sell Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="confirmModalLabel">Confirm Sale</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-2">You are about to sell:</p>
+        
+      
+
+        <ul class="list-unstyled mb-3">
+          <li><strong>Shoe type:</strong> <span id="mType">–</span></li>
+          <li><strong>Size:</strong> <span id="mSize">–</span></li>
+          <li><strong>Color:</strong> <span id="mColor">–</span></li>
+          <li><strong>Pieces:</strong> <span id="mPieces">–</span></li>
+          <li><strong>Price per piece (Ksh):</strong> <span id="mPrice">–</span></li>
+        </ul>
+        <div class="alert alert-info py-2 mb-0">
+          <strong>Total (Ksh):</strong> <span id="mTotal">0.00</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="confirmSell" class="btn btn-primary">Confirm &amp; Sell</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+(function () {
+  // CSRF Token helper
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  const csrftoken = getCookie('csrftoken');
+
+  const sellForm = document.getElementById('sellForm');
+  const typeSelect = document.getElementById('id_shoe_type');
+  const sizeSelect = document.getElementById('id_size');
+  const colorSelect = document.getElementById('id_color');
+  const shoeImagePreview = document.getElementById('shoeImagePreview'); // Image preview element
+  const piecesSelect = document.getElementById('id_pieces');
+  const priceInput = document.getElementById('id_price_per_piece');
+
+  const mType = document.getElementById('mType');
+  const mSize = document.getElementById('mSize');
+  const mColor = document.getElementById('mColor');
+  const mPieces = document.getElementById('mPieces');
+  const mPrice = document.getElementById('mPrice');
+  const mTotal = document.getElementById('mTotal');
+
+  const flashArea = document.getElementById('flashArea');
+
+  // Update shoe image in the modal
+  function updateShoeImage(shoeImageUrl) {
+    const shoeImagePreview = document.getElementById('shoeImagePreviewModal');
+    if (shoeImageUrl) {
+      shoeImagePreview.src = shoeImageUrl;
+      shoeImagePreview.style.display = 'block'; // Show the image
+    } else {
+      shoeImagePreview.style.display = 'none'; // Hide the image if not available
+    }
+  }
+
+  // Function to fetch the shoe image URL based on shoe type, size, and color
+  async function fetchShoeImage(shoeType, size, color) {
+  if (!shoeType || !size || !color) {
+    console.error("Missing parameters: shoeType, size, or color");
+    return null; // Stop if any of the required parameters are missing
+  }
+
+  // Correct URL construction: Make sure the parameters are passed correctly
+  const url = `{% url 'sellshoe:get_shoe_image' %}?shoe_type=${encodeURIComponent(shoeType)}&size=${encodeURIComponent(size)}&color=${encodeURIComponent(color)}`;
+  console.log("Fetching image URL: ", url);  // Log the URL to the console for debugging
+
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.image_url; // This is the URL of the shoe image
+}
+
+
+
+  // helpers
+  function resetSelect(select, placeholder) {
+    select.innerHTML = '';
+    const opt = document.createElement('option');
+    opt.value = '';
+    opt.textContent = placeholder;
+    select.appendChild(opt);
+  }
+
+  // Populating sizes based on the selected shoe type
+  async function populateSizesForType(st, keepValue) {
+    resetSelect(sizeSelect, 'Select size');
+    resetSelect(colorSelect, 'Select color');
+    if (!st) return;
+    const res = await fetch(`{% url 'sellshoe:sizes_for_type' %}?shoe_type=${encodeURIComponent(st)}`);
+    const data = await res.json();
+    data.sizes.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      sizeSelect.appendChild(opt);
+    });
+    if (keepValue && data.sizes.includes(parseInt(keepValue))) sizeSelect.value = keepValue;
+  }
+
+  // Populating colors based on the selected shoe type and size
+  async function populateColorsForSize(st, sz, keepValue) {
+    resetSelect(colorSelect, 'Select color');
+    if (!st || !sz) return;
+    const res = await fetch(`{% url 'sellshoe:colors_for_size' %}?shoe_type=${encodeURIComponent(st)}&size=${encodeURIComponent(sz)}`);
+    const data = await res.json();
+    data.colors.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      colorSelect.appendChild(opt);
+    });
+    if (keepValue && data.colors.includes(keepValue)) colorSelect.value = keepValue;
+  }
+
+  // Change handlers for shoe type and size selections
+  typeSelect.addEventListener('change', async () => {
+    await populateSizesForType(typeSelect.value, null);
+    updateShoeImage('');  // Clear image when shoe type changes
+  });
+  sizeSelect.addEventListener('change', async () => {
+    await populateColorsForSize(typeSelect.value, sizeSelect.value, null);
+    updateShoeImage('');  // Clear image when size changes
+  });
+
+  // Color change handler to fetch the shoe image after all selections
+  colorSelect.addEventListener('change', async function () {
+    const shoeType = typeSelect.value;
+    const size = sizeSelect.value;
+    const color = colorSelect.value;
+
+    // Only fetch and display the image after shoe type, size, and color are selected
+    if (shoeType && size && color) {
+      const shoeImageUrl = await fetchShoeImage(shoeType, size, color);
+
+      console.log(shoeImageUrl);  // This will print the image URL in the browser console
+
+      updateShoeImage(shoeImageUrl);  // Show the image in the preview
+    }
+  });
+
+  // Auto-populate on first load if a shoe type is already selected
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeSelect.value) {
+      await populateSizesForType(typeSelect.value, null);
+    }
+  });
+
+  // Confirm modal logic
+  let confirmModal;
+  sellForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const type = typeSelect.value;
+    const size = sizeSelect.value;
+    const color = colorSelect.value;
+    const pieces = parseInt(piecesSelect.value || '0', 10);
+    const price = parseFloat(priceInput.value || '0');
+
+    if (!type || !size || !color || !pieces || !price || price <= 0) {
+      showFlash('danger', 'Please select type, size, color, pieces (1–20) and enter a valid price per piece.');
+      return;
+    }
+
+    mType.textContent = type;
+    mSize.textContent = size;
+    mColor.textContent = color;
+    mPieces.textContent = pieces;
+    mPrice.textContent = price.toFixed(2);
+    mTotal.textContent = (pieces * price).toFixed(2);
+
+    // Fetch the shoe image URL and update the modal image preview
+    const shoeImageUrl = `{{ shoe_image_url }}`; // This will be dynamically passed from the view
+    updateShoeImage(shoeImageUrl);
+
+    if (!confirmModal) {
+      confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    }
+    confirmModal.show();
+  });
+
+  // Confirm and Sell button logic
+  document.getElementById('confirmSell').addEventListener('click', async function () {
+    const btn = this;
+    btn.disabled = true;
+    btn.innerText = 'Selling...';
+
+    const payload = {
+      shoe_type: typeSelect.value,
+      size: sizeSelect.value,
+      color: colorSelect.value,
+      pieces: piecesSelect.value,
+      price_per_piece: priceInput.value
+    };
+
+    try {
+      const res = await fetch("{% url 'sellshoe:sell_do' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        showFlash('danger', data.error || 'Failed to complete sale.');
+        btn.disabled = false;
+        btn.innerText = 'Confirm & Sell';
+        return;
+      }
+
+      // (Optional) hide modal before reload
+      window.location.reload();
+    } catch (e) {
+      showFlash('danger', 'Network error. Please try again.');
+      btn.disabled = false;
+      btn.innerText = 'Confirm & Sell';
+    }
+  });
+})();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ShoeTiba</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h3>Welcome, {{ user.username }}</h3>
+
+        <!-- First Card: Shoe Type Overview -->
+        <div class="card2 ">
+            <div class="card-header">Shoe Types and Buying Price</div>
+            <div class="card1-body">
+                <div class="row">
+                    {% for shoe_type, count in shoe_types.items %}
+                    <div class="col-md-2 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ shoe_type }}</h5>
+                                <p class="card-text">{{ count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="col-md-2 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">B.Price</h5>
+                                <p class="card-text">{{ total_price }}</p>  <!-- Assuming total_price is passed in context -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Card: Add New Shoe Here -->
+        <div class="card2">
+            <div class="card-header"> Shoe Management Actions</div>
+              <div class="card2-body">
+                <!-- Add New Shoe Link -->
+                <a href="{% url 'shoe_input:add_shoe' %}" class="link-primary">Add New Shoe</a>
+                <!-- Sell a Shoe Link below Add New Shoe -->
+                <div class="mt-3">
+                    <a href="{% url 'sellshoe:sell_page' %}" class="link-primary">Sell a Shoe</a> 
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'index' %}" class="link-primary">Logout</a> 
+                </div>
+            </div> 
+          </div>             
+
+
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            document.getElementById('success-message').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

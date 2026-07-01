@@ -1,0 +1,288 @@
+/* ===========================
+   Add New Shoe (Blended Theme)
+   =========================== */
+
+:root{
+  /* Shared palette (same as sell/dashboard) */
+  --hue-1: #0d6efd;   /* azure */
+  --hue-2: #7c3aed;   /* violet */
+  --hue-3: #06b6d4;   /* cyan */
+  --hue-4: #10b981;   /* emerald */
+  --ink:   #eaf0ff;
+  --ink-dim:#cdd7ff;
+
+  --bg-a: #0a0f1f;
+  --bg-b: #121733;
+
+  --radius-xl: 22px;
+  --radius-lg: 16px;
+
+  --shadow-1: 0 10px 30px rgba(10, 20, 60, .35);
+  --shadow-2: 0 22px 60px rgba(10, 20, 60, .45);
+
+  --ring: rgba(124,58,237,.35);
+}
+
+/* Page background with soft blends (no flat white) */
+html, body{
+  min-height: 100%;
+  color: var(--ink);
+  background:
+    radial-gradient(80rem 40rem at -10% -10%, #0a3b8a30, transparent 55%),
+    radial-gradient(70rem 36rem at 110% 0%,  #7c3aed28, transparent 60%),
+    linear-gradient(140deg, #0a264a, #0f2740 30%, #141a36 60%, #0d1430);
+  font-feature-settings: "ss01","ss02","tnum";
+}
+
+/* ===== Panel ===== */
+.container32{
+  width: min(720px, 92%);
+  margin: 6vh auto;
+  padding: 1.25rem 1.25rem 1.35rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255,255,255,.14);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)),
+    /* cyan ↔ violet blend */
+    linear-gradient(135deg, rgba(6,182,212,.20), rgba(124,58,237,.20));
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-1);
+  animation: fadeUp .35s ease both;
+}
+
+@keyframes fadeUp{
+  from{ opacity:0; transform: translateY(8px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+
+/* Title with gradient ink */
+.container32 > h3{
+  font-weight: 900;
+  letter-spacing: .4px;
+  margin: .25rem 0 1rem;
+  background: linear-gradient(90deg, #eaf0ff, #b8c1ff 45%, #7aa7ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== Form (works with Django form.as_p) ===== */
+.container32 form p{
+  display: grid;
+  gap: .35rem;
+  margin: .65rem 0;
+}
+.container32 form p label{
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--ink-dim);
+}
+
+/* Inputs / selects / textareas */
+.container32 form p input,
+.container32 form p select,
+.container32 form p textarea,
+.container32 .form-control,
+.container32 .form-select{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  color: var(--ink);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: var(--radius-lg);
+  padding: .65rem .9rem;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease, transform .06s ease;
+}
+.container32 form p input:hover,
+.container32 form p select:hover,
+.container32 form p textarea:hover{
+  border-color: rgba(255,255,255,.22);
+}
+.container32 form p input:active,
+.container32 form p select:active,
+.container32 form p textarea:active{
+  transform: translateY(0); /* prevents jump on click */
+}
+
+.container32 form p input::placeholder,
+.container32 .form-control::placeholder{ color:#c7d0ff; opacity:.85; }
+.container32 form p select option{ color:#0f1730; }
+
+/* Remove spinners for number fields (Chrome/Edge/Safari) */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button{
+  -webkit-appearance: none; margin: 0;
+}
+input[type=number]{ -moz-appearance: textfield; }
+
+/* Focus ring */
+.container32 form p input:focus,
+.container32 form p select:focus,
+.container32 form p textarea:focus,
+.container32 .form-control:focus,
+.container32 .form-select:focus{
+  border-color: rgba(124,58,237,.45);
+  box-shadow: 0 0 0 .22rem var(--ring);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+  color:#fff;
+}
+
+/* Valid / invalid hints (if you add .is-valid / .is-invalid via JS) */
+.is-valid{
+  border-color: rgba(16,185,129,.55) !important;
+  box-shadow: 0 0 0 .18rem rgba(16,185,129,.28) !important;
+}
+.is-invalid{
+  border-color: rgba(239,68,68,.6) !important;
+  box-shadow: 0 0 0 .18rem rgba(239,68,68,.28) !important;
+}
+
+/* Error styles (Django default errorlist) */
+.errorlist{
+  list-style: none;
+  margin: .25rem 0 0;
+  padding: 0;
+}
+.errorlist li{
+  background:
+    linear-gradient(180deg, #4a1230, #2a0e1f);
+  border: 1px solid rgba(255,99,132,.35);
+  color: #ffd3df;
+  border-radius: 10px;
+  padding: .4rem .6rem;
+  display: inline-block;
+  font-size: .875rem;
+}
+
+/* ===== Buttons ===== */
+.container32 .btn{
+  border-radius: 14px;
+  font-weight: 800;
+  letter-spacing: .25px;
+  padding: .7rem 1.05rem;
+  transition: transform .15s ease, box-shadow .18s ease, filter .15s ease, border-color .15s ease;
+}
+
+.container32 .btn-primary{
+  border: 1px solid #3656ff;
+  color:#fff;
+  background:
+    linear-gradient(180deg, #3a79ff, #1658ff),              /* azure vertical */
+    linear-gradient(90deg, rgba(13,110,253,.18), rgba(124,58,237,.18)); /* azure ↔ violet */
+  box-shadow: 0 16px 38px rgba(13,110,253,.35);
+}
+.container32 .btn-primary:hover{
+  transform: translateY(-2px);
+  background:
+    linear-gradient(180deg, #4d8bff, #1a4df0),
+    linear-gradient(90deg, rgba(124,58,237,.20), rgba(13,110,253,.20));
+  box-shadow: 0 22px 56px rgba(13,110,253,.45);
+}
+.container32 .btn-primary:active{
+  transform: translateY(0);
+  filter: brightness(.96);
+}
+
+/* NEW: outline secondary (matches theme) */
+.container32 .btn-outline-secondary{
+  color: var(--ink);
+  border: 1px solid rgba(255,255,255,.22);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.container32 .btn-outline-secondary:hover{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  border-color: rgba(255,255,255,.30);
+}
+
+/* Small success/alert helpers (if you use messages) */
+.alert{
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: var(--shadow-1);
+  animation: fadeIn .25s ease both;
+}
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+.alert-success{
+  background:
+    linear-gradient(180deg, #0f3c2a, #0a2e22);
+  border-color: rgba(16,185,129,.35);
+  color: #c8ffe6;
+}
+
+/* ===== Modal (Confirm Add) – polished & blended ===== */
+.modal-content{
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.16);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)),
+    linear-gradient(135deg, rgba(13,110,253,.18), rgba(124,58,237,.18));
+  color: var(--ink);
+  box-shadow: var(--shadow-2);
+}
+.modal-header{
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  background:
+    linear-gradient(90deg, rgba(13,110,253,.25), rgba(124,58,237,.25));
+}
+.modal-title{ font-weight: 900; }
+.modal .btn-close{ filter: invert(1); opacity:.7; }
+
+.modal .btn-primary{
+  border: 1px solid #3656ff;
+  background:
+    linear-gradient(180deg, #3a79ff, #1658ff),
+    linear-gradient(90deg, rgba(13,110,253,.18), rgba(124,58,237,.18));
+  box-shadow: 0 12px 30px rgba(13,110,253,.35);
+}
+.modal .btn-outline-secondary{
+  color: var(--ink);
+  border: 1px solid rgba(255,255,255,.22);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px){
+  .container32{ width: 94%; padding: 1rem; border-radius: 18px; }
+}
+
+/* Optional light mode (still blended, not white-flat) */
+@media (prefers-color-scheme: light){
+  :root{ --ink:#0f1b3a; --ink-dim:#32456e; }
+  body{
+    color: var(--ink);
+    background:
+      radial-gradient(80rem 40rem at -10% -10%, #b9d2ff66, transparent 55%),
+      radial-gradient(70rem 36rem at 110% 0%,  #e1c9ff66, transparent 60%),
+      linear-gradient(140deg, #f3f6ff, #eef3ff 40%, #e9efff 75%, #eef2ff);
+  }
+  .container32{
+    background:
+      linear-gradient(180deg, #ffffff, #f6f9ff),
+      linear-gradient(135deg, rgba(13,110,253,.12), rgba(124,58,237,.12));
+    border-color:#e6ecff;
+  }
+  .container32 form p input,
+  .container32 form p select,
+  .container32 form p textarea{
+    background:
+      linear-gradient(180deg, #ffffff, #f7f9ff);
+    color:#0f1b3a;
+    border-color:#dfe5fb;
+  }
+  .modal-content{
+    background:
+      linear-gradient(180deg, #ffffff, #f6f8ff),
+      linear-gradient(135deg, rgba(13,110,253,.12), rgba(124,58,237,.12));
+    color:#0f1b3a;
+    border-color:#e6ecff;
+  }
+  .errorlist li{
+    background:#ffe8ef;
+    border-color:#ffc4d4;
+    color:#6a0e2d;
+  }
+}

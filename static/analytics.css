@@ -1,0 +1,78 @@
+.container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-left: 250px;
+}
+
+.row {
+    margin-bottom: 50px;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* ===================== Sidebar Styles ===================== */
+#sidebar {
+    background-color: #2d2d2d;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    width: 200px; /* Sidebar width */
+    z-index: 2;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+#sidebar .nav-item {
+    margin-bottom: 20px;
+}
+
+#sidebar .nav-link {
+    color: #b0bec5;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+#sidebar .nav-link:hover {
+    color: #fff;
+    background-color: #0d6efd;
+    padding-left: 20px;
+}
+
+#sidebarToggle {
+    display: none;
+}
+
+/* Sidebar Open/Close Button */
+#sidebarCloseButton, #sidebarOpenButton {
+    position: absolute;
+    top: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+#sidebarCloseButton {
+    right: 10px;
+}
+
+#sidebarOpenButton {
+    left: 10px;
+}
+
+/* Sidebar Close */
+#sidebarToggle:checked ~ #sidebar {
+    transform: translateX(-250px);
+}

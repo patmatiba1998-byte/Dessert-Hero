@@ -1,0 +1,74 @@
+/* frontend/css/verifycode.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-image: url('https://images.unsplash.com/photo-1567513246-4be6e4c469f9');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.verify-code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.verify-code-form {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  padding: 40px;
+  border-radius: 10px;
+  width: 400px;
+  color: white;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.input-container {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+input:focus {
+  background-color: #fff;
+  border: 2px solid #2575fc;
+}
+
+button {
+  background-color: #2575fc;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #6a11cb;
+}

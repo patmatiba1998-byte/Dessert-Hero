@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'dashboard2.css' %}" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar with X button on the top-left -->
+  <nav class="navbar navbar-expand-md fixed-top maine-menu">
+    <div class="container">
+      <button class="navbar-toggler ml-auto" data-target="#my-nav" onclick="myFunction(this)" data-toggle="collapse"> 
+        <span class="bar1"></span> 
+        <span class="bar2"></span> 
+        <span class="bar3"></span> 
+      </button>
+      <div id="my-nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item active"> <a class="nav-link" href="#">Home</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="#about" tabindex="-1" aria-disabled="true">About</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'users:login' %}" tabindex="-1" aria-disabled="true">Login</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- X Button to open sidebar -->
+    <label for="sidebarToggle" class="btn-close text-light" id="sidebarOpenButton" aria-label="Open Sidebar"></label>
+  </nav>
+
+  <div class="container-fluid">
+      <div class="row">
+          <!-- Sidebar Toggle Checkbox -->
+          <input type="checkbox" id="sidebarToggle" class="d-none">
+          
+          <!-- Sidebar -->
+          <div id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark text-light">
+              <div class="d-flex flex-column align-items-center p-3">
+                  <h3 class="text-center mb-4">Welcome</h3>
+                  <ul class="nav flex-column">
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'users:dashboard2' %}" id="shoeStockLink">Dashboard</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'shoe_stock:all_stock' %}" id="shoeStockLink">Shoe Stock</a>
+                      </li>
+                      
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'allshoesells:all_sells' %}" id="shoeStockLink">Shoe Sold</a>
+                      </li>
+                      
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'analytics:analytics_page' %}">Analytics</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'index' %}">Logout</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+          <!-- Main Content -->
+          <div class="col-md-9 ml-sm-auto col-lg-10 px-4" id="dashboardContent">
+              <div class="d-flex justify-content-between align-items-center">
+                  <h2>Welcome {{ user.username }}! to the Shoe Admin Dashboard</h2>
+              </div>
+
+              <div class="main-dashboard">
+                  <!-- Colorful Landing Page Section -->
+                  <div class="card mb-4" style="background-color: var(--hue-1); color: white;">
+                      <div class="card-body text-center">
+                          <h4>Welcome to the Admin Panel</h4>
+                          <p>Your central hub for managing shoe stock, sales, and more.</p>
+                      </div>
+                  </div>
+
+                  <!-- Shoe Stock Section -->
+                  <div id="shoeStockSection" class="d-none">
+                      <h4>Shoe Stock</h4>
+                      <div class="row" id="shoeStockCards">
+                          {% for shoe in shoe_types %}
+                              <div class="col-md-3 mb-4">
+                                  <div class="card">
+                                      <div class="card-body">
+                                          <h5 class="card-title">{{ shoe.0 }}</h5>
+                                          <p class="card-text">{{ shoe.1 }} pieces</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          {% endfor %}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
